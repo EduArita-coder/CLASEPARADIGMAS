@@ -1,0 +1,99 @@
+/*
+CSS se aplica a:
+1. Etiquetas de html
+2. Clases
+3. Identificadores
+*/
+
+:root {
+    --bg-dark: #1a1a1a;
+    --bg-container: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-accent: #60a5fa;
+    --btn-red: #ef4444;
+    --btn-red-hover: #dc2626;
+    --btn-yellow: #eab308;
+    --btn-yellow-hover: #ca8a04;
+    --btn-green: #22c55e;
+    --btn-green-hover: #16a34a;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.container {
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+}
+
+.counter-card {
+    background-color: var(--bg-container);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0, 0, 0.1);
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-accent);
+    margin: 0;
+}
+
+.count {
+    font-size: 5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.button {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    transition: background-color 0.2s;
+}
+
+.button-decrease {
+    background-color: var(--btn-red);
+}
+
+.button-decrease:hover {
+    background-color: var(--btn-red-hover);
+}
+
+.button-reset {
+    background-color: var(--btn-yellow);
+}
+
+.button-reset:hover {
+    background-color: var(--btn-yellow-hover);
+}
+
+.button-increase {
+    background-color: var(--btn-green);
+}
+
+.button-increase:hover {
+    background-color: var(--btn-green-hover);
+}
