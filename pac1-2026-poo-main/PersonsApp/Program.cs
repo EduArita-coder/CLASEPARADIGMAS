@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PersonsApp.Database;
 using PersonsApp.Extensions;
+using PersonsApp.Services.Auth;
 using PersonsApp.Services.Persons;
 using PersonsApp.Services.Roles;
 using PersonsApp.Services.Statistics;
@@ -19,8 +20,11 @@ builder.Services.AddTransient<IPersonService, PersonService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 
+builder.Services.AddCorsConfiguration(builder.Configuration);
 builder.Services.AddAuthenticationConfig(builder.Configuration);
+
 
 builder.Services.AddOpenApi();
 
@@ -36,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

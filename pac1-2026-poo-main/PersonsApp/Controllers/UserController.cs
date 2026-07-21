@@ -1,5 +1,7 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PersonsApp.Constants;
 using PersonsApp.Dtos.Common;
 using PersonsApp.Dtos.Users;
 using PersonsApp.Services.Users;
@@ -8,6 +10,8 @@ namespace PersonsApp.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -19,6 +23,8 @@ namespace PersonsApp.Controllers
             _userService = userService;
         }
         [HttpGet]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult<ResponseDto<PageDto<List<UserDto>>>>> GetPageList(string searchTerm = "", int page = 1, int pageSize = 0)
         {
             var response = await _userService.GetPageAsync(searchTerm, page, pageSize);
@@ -32,6 +38,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult<ResponseDto<UserDto>>> GetOne(string id )
         {
             var response = await _userService.GetOneAsync(id);
@@ -45,6 +53,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult<ResponseDto<UserActionResponseDto>>> Create(
             [FromBody] UserCreateDto dto)
         {
@@ -59,6 +69,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult<ResponseDto<UserActionResponseDto>>> Edit(
             string id, [FromBody]UserEditDto dto)
         {
@@ -73,6 +85,8 @@ namespace PersonsApp.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult<ResponseDto<UserActionResponseDto>>> Delete(
             string id)
         {

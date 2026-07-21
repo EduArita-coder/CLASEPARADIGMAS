@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonsApp.Dtos.Common;
 using PersonsApp.Dtos.Statistics;
@@ -7,6 +8,8 @@ namespace PersonsApp.Controllers
 {
     [ApiController]
     [Route("api/statistics")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class StatisticsController : ControllerBase
     {
         private readonly IStatisticsService _statistics;
@@ -19,6 +22,7 @@ namespace PersonsApp.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<ResponseDto<StatisticsDto>>> GetCounts()
         {
             var response = await _statistics.GetCounts();

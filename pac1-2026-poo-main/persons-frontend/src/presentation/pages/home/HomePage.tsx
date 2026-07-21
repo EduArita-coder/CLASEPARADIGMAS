@@ -1,7 +1,14 @@
 import { Lock, Users } from "lucide-react";
 import { DashboardCard } from "../../components";
+import { useEffect } from "react";
+import { countsAction } from "../../../core/actions/statistics/counts.action";
 
 export const HomePage = () => {
+  useEffect(()=>{
+    const body = countsAction();
+    console.log(body);
+    
+  }, []);
   return (
     <div className="p-4">
       <h1 className="text-3xl text-blue-400 mb-4">Página de Inicio</h1>

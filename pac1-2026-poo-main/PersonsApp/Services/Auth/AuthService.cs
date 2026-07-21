@@ -33,13 +33,8 @@ namespace PersonsApp.Services.Auth
         }
         public async Task<ResponseDto<LoginResponseDto>> LoginAsync(LoginDto dto)
         {
-            var result = await _signInManager.PasswordSignInAsync(
-                dto.Email,
-                dto.Password,
-                isPersistent : false,
-                lockoutOnFailure : false
-            );
-            if(!result.Succeeded)
+            var userEntity = await _userManager.FindByEmailAsync(dto.Email);
+            if (userEntity == null)
             {
                 return new ResponseDto<LoginResponseDto>
                 {
@@ -48,30 +43,45 @@ namespace PersonsApp.Services.Auth
                     Message = "Datos no validos"
                 };
             }
-            var UserEntity = await _userManager.FindByEmailAsync(dto.Email);
-            List<Claim> authClaims = await GetClaimsAsync(UserEntity);
+
+            var result = await _signInManager.CheckPasswordSignInAsync(
+                userEntity,
+                dto.Password,
+                lockoutOnFailure: false
+            );
+
+            if (!result.Succeeded)
+            {
+                return new ResponseDto<LoginResponseDto>
+                {
+                    StatusCode = HttpStatusCode.BAD_REQUEST,
+                    Status = false,
+                    Message = "Datos no validos"
+                };
+            }
+
+            List<Claim> authClaims = await GetClaimsAsync(userEntity);
 
             var refreshToken = GenerateRefreshTokenString();
-            UserEntity.RefreshToken = refreshToken;
-            UserEntity.RefreshTokenExpiry = DateTime
-            .Now.AddMinutes(int.Parse(_configuration["JWT:RefreshTokenExpiry"]));
+            userEntity.RefreshToken = refreshToken;
+            userEntity.RefreshTokenExpiry = DateTime
+                .Now.AddMinutes(int.Parse(_configuration["JWT:RefreshTokenExpiry"]));
 
             await _context.SaveChangesAsync();
             var jwToken = GetToken(authClaims);
 
             return new ResponseDto<LoginResponseDto>
             {
-              StatusCode = HttpStatusCode.OK,
-              Status = true,
-              Message = "Autenticacion Satisfactoria",
-              Data = new LoginResponseDto
-              {
-                  Email = UserEntity.Email,
-                  Token = new JwtSecurityTokenHandler().WriteToken(jwToken),
-                  RefreshToken = refreshToken
-              }  
+                StatusCode = HttpStatusCode.OK,
+                Status = true,
+                Message = "Autenticacion Satisfactoria",
+                Data = new LoginResponseDto
+                {
+                    Email = userEntity.Email,
+                    Token = new JwtSecurityTokenHandler().WriteToken(jwToken),
+                    RefreshToken = refreshToken
+                }
             };
-
         }
 
         public Task<ResponseDto<LoginResponseDto>> RefreshTokenAsync(RefreshTokenDto dto)

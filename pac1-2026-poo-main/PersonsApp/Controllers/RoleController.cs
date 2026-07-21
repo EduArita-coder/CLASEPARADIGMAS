@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PersonsApp.Constants;
 using PersonsApp.Dtos.Roles;
 using PersonsApp.Services.Roles;
 
@@ -6,6 +8,8 @@ namespace PersonsApp.Controllers
 {
     [ApiController]
     [Route("api/role")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+
     public class RoleController : ControllerBase
     {
         private readonly IRoleService _roleService;
@@ -18,6 +22,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult> GetPage(
             string searchTerm = "", int page = 1, int pageSize = 10 
         )
@@ -27,6 +33,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult> GetOne(string id)
         {
             var result = await _roleService.GetOneAsync(id);
@@ -34,6 +42,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult> Create(RoleCreateDto dto)
         {
             var result = await _roleService.CreateAsync(dto);
@@ -41,6 +51,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult> Update(string id, RoleEditDto dto)
         {
             var result = await _roleService.EditAsync(id, dto);
@@ -48,6 +60,8 @@ namespace PersonsApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = $"{RolesConstant.ADMIN}")]
+
         public async Task<ActionResult> Delete(string id)
         {
             var result = await _roleService.DeleteAsync(id);
