@@ -6,9 +6,9 @@ import { Loader } from "../../components/share/Loader";
 export const HomePage = () => {
   const { data : response, isLoading } = useStatistics();
 
-  // if(true){
-  //   return <Loader/>
-  // }
+   if(isLoading){
+     return <Loader/>
+  }
 
   return (
     <div className="p-4">
