@@ -1,0 +1,16 @@
+meta {
+  name: Delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{PATH_URL}}/person/89dfbd48-5e4e-4038-bcb3-938fd870555e
+  body: json
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

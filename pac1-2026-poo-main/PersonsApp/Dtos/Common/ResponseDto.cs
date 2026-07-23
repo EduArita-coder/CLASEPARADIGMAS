@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 namespace PersonsApp.Dtos.Common
 {
     public class ResponseDto<T>
     {
+        [JsonIgnore]
         public int StatusCode { get; set; } // Código de respuesta
         public string Message { get; set; } // Mensaje de la respuesta
         public bool Status { get; set; } // Verdadero para respuestas sin errores y sino falso

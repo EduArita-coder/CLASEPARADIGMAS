@@ -1,0 +1,15 @@
+meta {
+  name: Getall
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{PATH_URL}}/statistics
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

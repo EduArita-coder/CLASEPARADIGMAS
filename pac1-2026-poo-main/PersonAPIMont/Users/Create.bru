@@ -1,0 +1,37 @@
+meta {
+  name: Create
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{PATH_URL}}/users
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "firstName": "Juan",
+    "lastName": "Perez",
+    "birthDate": "2000-06-30",
+    "email": "jperez@meil.com",
+    "roles": [
+      "ADMIN"
+    ],
+    "password": "1234Pablo!",
+    "confirmPassword": "1234Pablo!"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  ## Validaciones 
+  
+  Pais requerido
+  FirstName requerido
+}

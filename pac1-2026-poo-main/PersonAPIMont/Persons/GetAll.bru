@@ -1,0 +1,20 @@
+meta {
+  name: GetAll
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{PATH_URL}}/person
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token:  {{JWT_TOKEN}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
