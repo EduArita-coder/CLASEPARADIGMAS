@@ -6,7 +6,7 @@ import type {
 import type { ApiResponse } from "../../../infrastructure/interfaces/api.response";
 import { personsApi } from "../../api";
 
-export const countsAction = async () => {
+export const countsAction = async() : Promise<ApiResponse<StatisticsResponse>> => {
   try {
     const { data: body } =
       await personsApi.get<ApiResponse<StatisticsResponse>>("statistics");

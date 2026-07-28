@@ -17,13 +17,13 @@ export const HomePage = () => {
       {/* Cards de estadisticas */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <DashboardCard
-          countValue={response.data.personsCount}
+          countValue={response?.data.personsCount || 0 }
           to="/persons/create"
           title="Personas"
           icon={<Users size={48} />}
         />
         <DashboardCard
-          countValue={response.data.usersCount}
+          countValue={response?.data.usersCount || 0}
           to="/users/create"
           title="Usuarios"
           icon={<Lock size={48} />}
